@@ -2,33 +2,29 @@ name: Monitor Melon Ticket
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # 每5分钟运行一次
-  workflow_dispatch:       # 支持手动触发
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 jobs:
   monitor:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: mooyoul/melon-ticket-actions@main
-        with:
-          product-id: '211408'
-          schedule-id: '100001'
-          seat-grade-id: '12215'
-          notify-slack: true
-          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - uses: mooyoul/melon-ticket-actions@main
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          product-id: '211408'
-          schedule-id: '100002'
-          seat-grade-id: '12215'
-          notify-slack: true
-          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          node-version: '20'
 
-      - uses: mooyoul/melon-ticket-actions@main
-        with:
-          product-id: '211408'
-          schedule-id: '100003'
-          seat-grade-id: '12215'
-          notify-slack: true
-          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run melon-ticket-monitor script
+        run: node ./src/index.js
+        env:
+          PRODUCT_ID: '211408'
+          SCHEDULE_ID: '100001'
+          SEAT_GRADE_ID: '12215'
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
