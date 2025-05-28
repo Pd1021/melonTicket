@@ -9,7 +9,7 @@ jobs:
   monitor:
     runs-on: ubuntu-latest
     steps:
-      - uses: mooyoul/melon-ticket-actions@v1
+      - uses: mooyoul/melon-ticket-actions@main
         with:
           product-id: '211408'
           schedule-id: '100001'
@@ -17,7 +17,7 @@ jobs:
           notify-slack: true
           slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - uses: mooyoul/melon-ticket-actions@v1
+      - uses: mooyoul/melon-ticket-actions@main
         with:
           product-id: '211408'
           schedule-id: '100002'
@@ -25,7 +25,7 @@ jobs:
           notify-slack: true
           slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - uses: mooyoul/melon-ticket-actions@v1
+      - uses: mooyoul/melon-ticket-actions@main
         with:
           product-id: '211408'
           schedule-id: '100003'
